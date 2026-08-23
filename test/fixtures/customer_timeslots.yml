@@ -3,9 +3,9 @@
 one:
   customer_info: MyString
   vehicle_info: MyString
-  timeslot: 1
+  timeslot: one
 
 two:
   customer_info: MyString
   vehicle_info: MyString
-  timeslot: 1
+  timeslot: two

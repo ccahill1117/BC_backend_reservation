@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2026-08-23 09:00:00
+  end_time: 2026-08-23 10:00:00
+
+two:
+  start_time: 2026-08-23 10:00:00
+  end_time: 2026-08-23 11:00:00

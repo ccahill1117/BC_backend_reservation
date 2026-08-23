@@ -7,3 +7,9 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+(9..16).each do |hour|
+  Timeslot.find_or_create_by!(start_time: Time.zone.parse("#{hour}:00")) do |timeslot|
+    timeslot.end_time = Time.zone.parse("#{hour + 1}:00")
+  end
+end
