@@ -1,0 +1,2 @@
+class CustomerTimeslot < ApplicationRecord
+end
