@@ -16,6 +16,8 @@
 * Rails 8.1.3.1
 * SQLite 2.1
 
+http://localhost:3000/rails/info/routes
+
 * Configuration
 
 * Database creation

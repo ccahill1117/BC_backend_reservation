@@ -5,5 +5,3 @@ class TimeslotsController < ApplicationController
     render json: @timeslots
   end
 end
-
-

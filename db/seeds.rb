@@ -1,15 +1,9 @@
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
 
+# seed function below create 8, UTC-based, 1-hour timeslots beginning at 0900, and ending at 1700
 (9..16).each do |hour|
-  Timeslot.find_or_create_by!(start_time: Time.zone.parse("#{hour}:00")) do |timeslot|
-    timeslot.end_time = Time.zone.parse("#{hour + 1}:00")
+  Timeslot.find_or_create_by!(start_time: Time.now.utc.change(hour: hour, min: 0)) do |timeslot|
+    timeslot.end_time = Time.now.utc.change(hour: hour + 1, min: 0)
   end
 end
