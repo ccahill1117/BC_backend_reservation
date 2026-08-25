@@ -1,8 +1,8 @@
 class TimeslotsController < ApplicationController
   def index
-    @timeslots = Timeslot.all
-    # return as json
-    render json: @timeslots
+    @timeslots = Timeslot.includes(:customer_timeslot)
+    # return as json, including the associated customer_timeslot
+    render json: @timeslots, include: :customer_timeslot
   end
 
   def destroy
