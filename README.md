@@ -9,6 +9,7 @@
   - Timeslot: id, start_time(datetime), end_time(datetime), created_at(datetime), updated_at(datetime)
   - CustomerTimeslot: id, customer_info(varchar), vehicle_info(varchar), created_at(datetime), updated_at(datetime), timeslot_id(int references Timeslot)
 - Add basic functionality to create CustomerTimeslots, delete CustomerTimeslots, and delete Timeslots.
+- I just used a basic GET Index for the timeslots_controller, as I figured there would be some sort of dashboard UI that this data would feed into for an 8-hour workday.
 
 ### Local Config and Setup for This Project
 - $ bundle install
@@ -67,4 +68,9 @@
 - I utilized Claude Code throughout the development of this app. I mostly used Claude to create some boilerplate for the first model (timeslots), and then copied and pasted a bit.
 - I additionally used Claude for a bit of the controller code, which for certain routes I then copied and pasted.
 - I heavily used Claude to write the rspec tests against the controllers, and focused more of my manual (Postman) testing on application code.
+
+### Future Improvements
+- Auth
+- Allow timeslots over multiple days
+- Rate Limiting/Strong Params for customer/vehicle info
 

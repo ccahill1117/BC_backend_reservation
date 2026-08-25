@@ -31,6 +31,32 @@ RSpec.describe "CustomerTimeslots", type: :request do
       expect(JSON.parse(response.body)).to eq({ "message" => "timeslot id not found" })
     end
 
+    it "rejects a booking with blank customer_info" do
+      post "/customer_timeslots", params: {
+        customer_info: "",
+        vehicle_info: "Ford E-150",
+        timeslot_id: timeslot.id
+      }
+
+      expect(response).to have_http_status(:unprocessable_content)
+      body = JSON.parse(response.body)
+      expect(body["errors"]).to include("Customer info can't be blank")
+      expect(CustomerTimeslot.where(timeslot_id: timeslot.id)).to be_empty
+    end
+
+    it "rejects a booking with blank vehicle_info" do
+      post "/customer_timeslots", params: {
+        customer_info: "John Smith",
+        vehicle_info: "",
+        timeslot_id: timeslot.id
+      }
+
+      expect(response).to have_http_status(:unprocessable_content)
+      body = JSON.parse(response.body)
+      expect(body["errors"]).to include("Vehicle info can't be blank")
+      expect(CustomerTimeslot.where(timeslot_id: timeslot.id)).to be_empty
+    end
+
     it "rejects a second booking for the same timeslot" do
       CustomerTimeslot.create!(
         timeslot_id: timeslot.id,
