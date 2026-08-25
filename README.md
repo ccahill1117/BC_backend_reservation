@@ -19,7 +19,7 @@
 
 ### How To Use This App (locally)
 
-- After running the above install, config, and seeding commands, the following endpoint will give you the available timeslots:
+- After running the above install, config, and seeding commands, the following endpoint will give you the Timeslots, with CustomerTimeslots included as well:
   - GET http://localhost:3000/timeslots
   - ![GET timeslots index](public/get_timeslots_index.jpg)
 - Once you have the ID of an available timeslot, use the following endpoint to book an appointment (customer_timeslot) with the following JSON body
@@ -32,7 +32,6 @@
     }
     ```
   - ![POST customer_timeslots](public/post_customer_timeslot.jpg)
-
 - If you want to delete any of the timeslots (say during lunch hour, or for other business reasons):
   - DELETE http://localhost:3000/timeslots/:timeslot_id
     - if that timeslot exists, it will be deleted (along with an associated customer_timeslot, if there is one)
