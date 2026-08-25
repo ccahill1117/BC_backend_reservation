@@ -1,6 +1,8 @@
 class TimeslotsController < ApplicationController
   def index
-    @timeslots = Timeslot.all # Fetches data to pass to the view
+    @timeslots = Timeslot.all
+    # return as json
+    render json: @timeslots
   end
 end
 

@@ -7,7 +7,9 @@
 
 
 ### Local Config and Setup for This Project
-- 
+- $ rails db:migrate
+- $ rails db:seed 
+  - this command will seed the available timeslots
 
 ### Relevant Library Versions
 * Ruby 3.4.7
