@@ -15,6 +15,7 @@
 - $ rails db:migrate
 - $ rails db:seed 
   - this command will create 8x, 1-hr timeslots for the current day running the hours of 0900-1700 (in UTC)
+- $ rails server
 
 ### How To Use This App (locally)
 
