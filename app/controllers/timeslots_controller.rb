@@ -15,5 +15,4 @@ class TimeslotsController < ApplicationController
       render json: { message: "timeslot id not found" }, status: :not_found
     end
   end
-
 end

@@ -47,6 +47,8 @@
 * Ruby 3.4.7
 * Rails 8.1.3.1
 * SQLite 2.1
+* Rspec for unit tests
+* Rubocop for linting
 
 ### Ai Usage
 - I utilized Claude Code throughout the development of this app. I mostly used Claude to create some boilerplate for the first model (timeslots), and then copied and pasted a bit.

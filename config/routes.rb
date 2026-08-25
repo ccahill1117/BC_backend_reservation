@@ -6,4 +6,3 @@ Rails.application.routes.draw do
   # delete timeslots by id
   delete "/timeslots/:id" => "timeslots#destroy"
 end
-
