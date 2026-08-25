@@ -35,6 +35,13 @@
   - see below example: 
  - ![DB Browser for SQLite](public/db_browser_for_sqlite.jpg)
 
+ ### Testing (RSpec)
+ - I am using RSpec for testing the controllers in this app
+ - I did not add unit tests for models since they are so small
+ - The test suite can be run via:
+  - $ bundle exec rspec
+  or, for verbose results: 
+  - $ bundle exec rspec --format documentation
 
 ### Relevant Library Versions
 * Ruby 3.4.7
@@ -44,7 +51,9 @@
 ### Ai Usage
 - I utilized Claude Code throughout the development of this app. I mostly used Claude to create some boilerplate for the first model (timeslots), and then copied and pasted a bit.
 - I additionally used Claude for a bit of the controller code, which for certain routes I then copied and pasted.
-- 
+- I heavily used Claude to write the rspec tests against the controllers, and focused more of my manual (Postman) testing on application code.
+
+
 
 Notably  
   - 
@@ -57,10 +66,6 @@ Notably
 * Database initialization
 
 * How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
 
 * ...
 

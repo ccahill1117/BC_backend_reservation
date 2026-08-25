@@ -17,7 +17,7 @@ class CustomerTimeslotsController < ApplicationController
     if customer_timeslot.save
       render json: customer_timeslot, status: :created
     else
-      render json: { errors: customer_timeslot.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: customer_timeslot.errors.full_messages }, status: :unprocessable_content
     end
   end
 end
