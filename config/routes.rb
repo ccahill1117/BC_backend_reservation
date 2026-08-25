@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   post "/customer_timeslots" => "customer_timeslots#book"
   # delete timeslots by id
   delete "/timeslots/:id" => "timeslots#destroy"
+  # delete cusomter_timeslots by id
+  delete "/customer_timeslots/:id" => "customer_timeslots#destroy"
 end

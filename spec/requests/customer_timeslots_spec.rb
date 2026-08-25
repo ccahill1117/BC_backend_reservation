@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "CustomerTimeslots", type: :request do
-  describe "POST /customer_timeslots" do
-    let(:timeslot) { Timeslot.create!(start_time: Time.zone.now, end_time: Time.zone.now + 1.hour) }
+  let(:timeslot) { Timeslot.create!(start_time: Time.zone.now, end_time: Time.zone.now + 1.hour) }
 
+  describe "POST /customer_timeslots" do
     it "creates a customer_timeslot associated with the given timeslot" do
       post "/customer_timeslots", params: {
         customer_info: "John Smith",
@@ -50,6 +50,41 @@ RSpec.describe "CustomerTimeslots", type: :request do
 
       expect(CustomerTimeslot.where(timeslot_id: timeslot.id).count).to eq(1)
       expect(CustomerTimeslot.find_by(timeslot_id: timeslot.id).customer_info).to eq("Existing Customer")
+    end
+  end
+
+  describe "DELETE /customer_timeslots/:id" do
+    it "deletes the customer_timeslot and returns a success message" do
+      customer_timeslot = CustomerTimeslot.create!(
+        timeslot_id: timeslot.id,
+        customer_info: "Jane Doe",
+        vehicle_info: "Honda Civic"
+      )
+
+      delete "/customer_timeslots/#{customer_timeslot.id}"
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq({ "message" => "customer timeslot successfully deleted" })
+      expect(CustomerTimeslot.exists?(customer_timeslot.id)).to be(false)
+    end
+
+    it "does not delete the associated timeslot" do
+      customer_timeslot = CustomerTimeslot.create!(
+        timeslot_id: timeslot.id,
+        customer_info: "Jane Doe",
+        vehicle_info: "Honda Civic"
+      )
+
+      delete "/customer_timeslots/#{customer_timeslot.id}"
+
+      expect(Timeslot.exists?(timeslot.id)).to be(true)
+    end
+
+    it "returns 404 with a not found message when the customer_timeslot does not exist" do
+      delete "/customer_timeslots/999999"
+
+      expect(response).to have_http_status(:not_found)
+      expect(JSON.parse(response.body)).to eq({ "message" => "customer timeslot id not found" })
     end
   end
 end
