@@ -2,14 +2,14 @@
 
 ### Architecture Decisions
 - Keeping DB simple with zero-config SQLite
-- Assume every appointment is one-hour in duration
-- Seed database with a function that creats 8x 1-hour long appointments on that calendar day
-  - Running that twice will not create additional timeslots due to being seed file
+- Assume every appointment (Timeslot) is one-hour in duration
+- Seed database with a function that creats 8x 1-hour long Timeslot on that calendar day
+  - If some Timeslots are deleted, re-running the seed ($ rails db:seed), will re-create the deleted Timeslots
 - Keep models small and simple 
   - Timeslot: id, start_time(datetime), end_time(datetime), created_at(datetime), updated_at(datetime)
-  - CustomerTimeslot: id, customer_info(varchar), vehicle_info(varchar), created_at(datetime), updated_at(datetime), timeslot_id(int references Timeslot)
+  - CustomerTimeslot: id, customer_info(varchar), vehicle_info(varchar), created_at(datetime), updated_at(datetime), timeslot_id(int references Timeslot), work_completed(boolean)
 - Add basic functionality to create CustomerTimeslots, delete CustomerTimeslots, and delete Timeslots.
-- I just used a basic GET Index for the timeslots_controller, as I figured there would be some sort of dashboard UI that this data would feed into for an 8-hour workday.
+- I used a basic GET Index for the timeslots_controller, as I figured there would be some sort of dashboard UI representing a day's work that this data would feed into.
 
 ### Local Config and Setup for This Project
 - $ bundle install
@@ -20,11 +20,11 @@
 
 ### How To Use This App (locally)
 
-- After running the above install, config, and seeding commands, the following endpoint will give you the Timeslots, with CustomerTimeslots included as well:
-  - GET http://localhost:3000/timeslots
+- GET http://localhost:3000/timeslots
+  - After running the above install, config, and seeding commands, the endpoint will give you the Timeslots, with CustomerTimeslots included as well:
   - ![GET timeslots index](public/get_timeslots_index.jpg)
-- Once you have the ID of an available timeslot, use the following endpoint to book an appointment (customer_timeslot) with the following JSON body
-  - POST http://localhost:3000/customer_timeslots
+- POST http://localhost:3000/customer_timeslots
+  - Once you have the ID of an available timeslot, use the endpoint to book an appointment (customer_timeslot) with the following JSON body
     ```json
     {
       "customer_info": "John Smith",
@@ -33,10 +33,20 @@
     }
     ```
   - ![POST customer_timeslots](public/post_customer_timeslot.jpg)
-- If you want to delete any of the timeslots (say during lunch hour, or for other business reasons):
+  
+- PATCH http://localhost:3000/customer_timeslots/:customer_timeslot_id
+  - We can update once work is completed for a CustomerTimeslot via the route above with following JSON:
+    ```json
+    {
+      "work_completed": true
+    }
+    ```
+  - ![PATCH customer_timeslots](public/patch_customer_timeslot_work_completed.jpg)
+
+- If you want to delete any of the Timeslot records (say during lunch hour, or for other business reasons):
   - DELETE http://localhost:3000/timeslots/:timeslot_id
-    - if that timeslot exists, it will be deleted (along with an associated customer_timeslot, if there is one)
-- If you want to delete any customer_timeslot (maybe someone canceled, etc.):
+    - if that timeslot exists, it will be deleted (along with an associated CustomerTimeslot, if there is one)
+- If you want to delete any CustomerTimeslot (maybe someone canceled, etc.):
   - DELETE http://localhost:3000/customer_timeslots/:customer_timeslot_id
 - ![DELETE customer_timeslots](public/delete_customer_timeslots.jpg)
 - If you want to delete all Timeslots and CustomerTimeslots and start over with fresh Timeslot data:
@@ -70,7 +80,9 @@
 - I heavily used Claude to write the rspec tests against the controllers, and focused more of my manual (Postman) testing on application code.
 
 ### Future Improvements
-- Auth
-- Allow timeslots over multiple days
-- Rate Limiting/Strong Params for customer/vehicle info
-
+- I tried to keep my time on this project to 3-4 hours, over a few days. With more time I would have included: 
+  - Auth
+  - Allow timeslots over multiple days
+  - Paginate results over multiple days for front end consumption
+  - Seed db with options for vehicle info (i.e. dropdown)
+  - Mailer info once a CustomerTimeslot has been completed

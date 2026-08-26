@@ -19,6 +19,20 @@ class CustomerTimeslotsController < ApplicationController
     end
   end
 
+  def update
+    customer_timeslot = CustomerTimeslot.find_by(id: params[:id])
+    # if we find the customer_timeslot via :id, then update, if not return error to front end
+    unless customer_timeslot
+      return render json: { message: "customer timeslot id not found" }, status: :not_found
+    end
+
+    if customer_timeslot.update(work_completed: params[:work_completed])
+      render json: customer_timeslot
+    else
+      render json: { errors: customer_timeslot.errors.full_messages }, status: :unprocessable_content
+    end
+  end
+
   def destroy
     customer_timeslot = CustomerTimeslot.find_by(id: params[:id])
     # if we find the customer_timeslot via :id, then delete, if not return error to front end

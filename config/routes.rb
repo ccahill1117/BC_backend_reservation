@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   delete "/timeslots/:id" => "timeslots#destroy"
   # delete cusomter_timeslots by id
   delete "/customer_timeslots/:id" => "customer_timeslots#destroy"
+  # update customer_timeslot work_completed status by id
+  # PATCH here is rails convention
+  patch "/customer_timeslots/:id" => "customer_timeslots#update"
 end

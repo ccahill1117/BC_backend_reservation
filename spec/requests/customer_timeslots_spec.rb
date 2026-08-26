@@ -79,6 +79,44 @@ RSpec.describe "CustomerTimeslots", type: :request do
     end
   end
 
+  describe "PATCH /customer_timeslots/:id" do
+    it "updates work_completed to true" do
+      customer_timeslot = CustomerTimeslot.create!(
+        timeslot_id: timeslot.id,
+        customer_info: "Jane Doe",
+        vehicle_info: "Honda Civic"
+      )
+
+      patch "/customer_timeslots/#{customer_timeslot.id}", params: { work_completed: true }
+
+      expect(response).to have_http_status(:ok)
+      body = JSON.parse(response.body)
+      expect(body["work_completed"]).to eq(true)
+      expect(customer_timeslot.reload.work_completed).to be(true)
+    end
+
+    it "updates work_completed back to false" do
+      customer_timeslot = CustomerTimeslot.create!(
+        timeslot_id: timeslot.id,
+        customer_info: "Jane Doe",
+        vehicle_info: "Honda Civic",
+        work_completed: true
+      )
+
+      patch "/customer_timeslots/#{customer_timeslot.id}", params: { work_completed: false }
+
+      expect(response).to have_http_status(:ok)
+      expect(customer_timeslot.reload.work_completed).to be(false)
+    end
+
+    it "returns 404 with a not found message when the customer_timeslot does not exist" do
+      patch "/customer_timeslots/999999", params: { work_completed: true }
+
+      expect(response).to have_http_status(:not_found)
+      expect(JSON.parse(response.body)).to eq({ "message" => "customer timeslot id not found" })
+    end
+  end
+
   describe "DELETE /customer_timeslots/:id" do
     it "deletes the customer_timeslot and returns a success message" do
       customer_timeslot = CustomerTimeslot.create!(
