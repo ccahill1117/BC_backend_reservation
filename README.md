@@ -43,12 +43,15 @@
     ```
   - ![PATCH customer_timeslots](public/patch_customer_timeslot_work_completed.jpg)
 
-- If you want to delete any of the Timeslot records (say during lunch hour, or for other business reasons):
-  - DELETE http://localhost:3000/timeslots/:timeslot_id
+- DELETE http://localhost:3000/timeslots/:timeslot_id
+  - If you want to delete any of the Timeslot records (say during lunch hour, or for other business reasons):
     - if that timeslot exists, it will be deleted (along with an associated CustomerTimeslot, if there is one)
-- If you want to delete any CustomerTimeslot (maybe someone canceled, etc.):
-  - DELETE http://localhost:3000/customer_timeslots/:customer_timeslot_id
+- DELETE http://localhost:3000/customer_timeslots/:customer_timeslot_id
+  - If you want to delete any CustomerTimeslot (maybe someone canceled, etc.):
+
 - ![DELETE customer_timeslots](public/delete_customer_timeslots.jpg)
+
+### Fresh Start
 - If you want to delete all Timeslots and CustomerTimeslots and start over with fresh Timeslot data:
   - (in rails console) $ Timeslot.destroy_all
   - (in project root bash) $ rails db:seed
